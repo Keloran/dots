@@ -1,0 +1,192 @@
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+set $mod1 Menu
+set $mod2 XF86AudioMedia
+
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+# Your preferred terminal emulators
+#set $term-float xfce4-terminal
+set $term-float foot
+set $browser google-chrome-stable --ozone-platform-hint=auto
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+#set $menu wofi -c ~/.config/wofi/config -s ~/.config/wofi/style.css -I
+#set $menu rofi -terminal foot -show drun
+set $menu tofi-drun
+
+set $powermenu ~/.config/waybar/scripts/power-menu.sh
+
+### Idle configuration
+#exec swayidle -w \
+#       timeout 1070 'swaylock --indicator-radius --submit-on-touch -C ~/.config/swaylock/config' \
+#       timeout 770 'swaymsg "output * dpms off"' \
+#       resume 'swaymsg "output * dpms on"' \
+#       before-sleep 'swaylock -C ~/.config/swaylock/config'
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+## Lock Screen
+bindsym $mod1+l exec ~/.config/sway/scripts/lockman.sh
+bindsym $mod2+l exec ~/.config/sway/scripts/lockman.sh
+
+### Key bindings
+#
+# Basics:
+#
+# Start a floating terminal
+bindsym $mod+Return exec $term-float
+bindsym $mod+Shift+Return exec qutebrowser
+
+# Open the power menu
+#bindsym $mod+Shift+e exec $powermenu
+#bindsym $mod+shift+e exec nwg-bar -t power.json
+
+# Calculator
+#bindsym $mod+c exec wofi-calc
+bindsym $mod1+c exec io.elementary.calculator
+bindsym $mod2+c exec io.elementary.calculator
+
+# Kill focused window
+#bindsym $mod+shift+q kill
+bindsym $mod+q kill
+bindsym $mod+Shift+q exec env RUST_BACKTRACE=1 swayr quit-window >> /tmp/swayr.log 2>&1
+
+# Start your launcher
+bindsym $mod+space exec $menu
+
+# Notifications
+bindsym $mod+n exec swaync-client -t -sw
+
+# Activities
+bindsym $mod1+p exec ~/.config/wofi/windows.py
+bindsym $mod2+p exec ~/.config/wofi/windows.py
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# Reload the configuration file
+#bindsym $mod+Shift+c reload
+
+bindsym $mod+tab exec env RUST_BACKTRACE=1 swayr switch-to-urgent-or-lru-window >> /tmp/swayr.log 2>&1
+bindsym $mod+Shift+Space exec env RUST_BACKTRACE=1 swayr switch-workspace-or-window >> /tmp/swayr.log 2>&1
+
+bindsym $mod1+r exec env RUST_BACKTRACE=1 swayr execute-swaymsg-command >> /tmp/swayr.log 2>&1
+bindsym $mod2+r exec env RUST_BACKTRACE=2 swayr execute-swaymsg-command >> /tmp/swayr.log 2>&1
+
+
+#
+# Clipboard
+# 
+bindsym $mod+h exec clipman pick -t wofi
+
+#
+# Scratchpad:
+#
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod1+h move scratchpad
+
+bindsym $mod1+Shift+Ctrl+Return move scratchpad
+bindsym $mod2+Shift+Ctrl+Return move scratchpad 
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+
+#
+# Volume
+#
+#bindsym --locked XF86AudioRaiseVolume exec pamixer -ui 2
+#bindsym --locked XF86AudioLowerVolume exec pamixer -ud 2
+#bindsym --locked XF86AudioMute exec pamixer -t
+
+bindsym XF86AudioLowerVolume exec pactl -- set-sink-mute @DEFAULT_SINK@ 0 && pactl -- set-sink-volume @DEFAULT_SINK@ -10% && pamixer --get-volume > $WOBSOCK
+bindsym XF86AudioRaiseVolume exec pactl -- set-sink-mute @DEFAULT_SINK@ 0 && pactl -- set-sink-volume @DEFAULT_SINK@ +10% && pamixer --get-volume > $WOBSOCK
+bindsym XF86AudioMute exec pactl -- set-sink-mute @DEFAULT_SINK@ toggle
+
+
+#
+# Player
+#
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+
+#
+# Backlight
+#
+bindsym XF86MonBrightnessUp exec brightnessctl -c backlight set +5% | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+bindsym XF86MonBrightnessDown exec brightnessctl -c backlight set 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+
+
+#
+# App shortcuts
+#
+bindsym $mod1+n exec thunar
+bindsym $mod2+n exec thunar
+
+bindsym $mod1+o exec firefox
+bindsym $mod2+o exec firefox
+
+
+#
+# Screenshots
+#
+bindsym $mod+shift+p exec grim -g "$(slurp)" ~/Pictures/"$(date +%s)".png
+bindsym $mod+p exec ~/.config/sway/scripts/screenshot.sh
+bindsym Shift+print exec ~/.config/sway/scripts/screenshot.sh
+
+
+#
+# Keybindings List
+#
+#bindsym $mod+t exec xed ~/.config/sway/cheatsheet
+
+set $nag exec swaynagmode
+mode "nag" {
+  bindsym {
+    Ctrl+d    mode "default"
+
+    Ctrl+c    $nag --exit
+    q         $nag --exit
+    Escape    $nag --exit
+
+    Return    $nag --confirm
+
+    Tab       $nag --select prev
+    Shift+Tab $nag --select next
+
+    Left      $nag --select next
+    Right     $nag --select prev
+
+    Up        $nag --select next
+    Down      $nag --select prev
+  }
+}
+
+
+
+#bindgesture swipe:3:left workspace prev
+#bindgesture swipe:3:right workspace next
+#bindgesture swipe:4:up move scratchpad
+#bindgesture swipe:4:down [floating] scratchpad show
+#bindgesture pinch:inward floating enable
+#bindgesture pinch:outward floating disable
+

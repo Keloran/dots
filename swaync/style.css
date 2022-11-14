@@ -1,0 +1,153 @@
+/*
+ * vim: ft=less 
+ */
+
+@define-color border-color rgb(98, 114, 164);
+@define-color bg rgb(98, 114, 164);
+@define-color bg-hover rgb(68, 68, 68);
+@define-color bg-focus rgba(98, 114, 164, 0.6);
+@define-color bg-selected rgb(40, 42, 54);
+
+.notification-row {
+  outline: none;
+}
+.notification-row:focus,
+.notification-row:hover {
+  background: @bg-focus;
+}
+
+.notification {
+  /*border-radius: 10px;*/
+  margin: 6px 12px;
+  box-shadow: 0px 2px 4px 2px rgba(98, 114, 164, 0.3);
+  padding: 0;
+}
+
+.notification-content {
+  background: transparent;
+  /*padding: 6px;*/
+  /*border-radius: 10px;*/
+}
+
+.close-button {
+  background: black;
+  color: white;
+  text-shadow: none;
+  padding: 0 2px;
+  box-shadow: 0px 2px 4px 2px rgba(98, 114, 164, 0.3);
+  border-radius: 100%;
+}
+.close-button:hover {
+  background: rgb(68, 68, 68);
+  transition: all 0.15s ease-in-out;
+}
+
+.notification-default-action,
+.notification-action {
+  /*padding: 4px;*/
+  margin: 0;
+  box-shadow: none;
+  background: @bg;
+  /*border: 1px solid @border-color;*/
+}
+
+.notification-default-action:hover,
+.notification-action:hover {
+  background: @bg-hover;
+}
+
+/*.notification-default-action {
+  border-radius: 10px;
+}*/
+
+/* When alternative actions are visible */
+.notification-default-action:not(:only-child) {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.notification-action {
+  border-radius: 0px;
+  border-top: none;
+  border-right: none;
+}
+
+/* add bottom border radius to eliminate clipping */
+/*.notification-action:first-child {
+  border-bottom-left-radius: 10px;
+}*/
+.notification-action:last-child {
+  /*border-bottom-right-radius: 10px;*/
+  border-right: 1px solid @border-color;
+}
+
+.image {
+}
+
+.body-image {
+  margin-top: 6px;
+  background-color: white;
+  /*border-radius: 10px;*/
+}
+
+.summary {
+  color: white;
+  text-shadow: none;
+}
+
+.time {
+  color: white;
+  text-shadow: none;
+}
+
+.body {
+  background: transparent;
+  color: white;
+  text-shadow: none;
+}
+
+.top-action-title {
+  color: white;
+  text-shadow: none;
+}
+
+.control-center-clear-all {
+  color: white;
+  text-shadow: none;
+  background: @bg;
+  border: 1px solid @border-color;
+  box-shadow: none;
+  /*border-radius: 10px;*/
+}
+.control-center-clear-all:hover {
+  background: @bg-hover;
+}
+
+.control-center-dnd {
+  /*border-radius: 10px;*/
+  background: @bg;
+  border: 1px solid @border-color;
+  box-shadow: none;
+}
+
+.control-center-dnd:checked {
+  background: @bg-selected;
+}
+.control-center-dnd slider {
+  background: @bg-hover;
+}
+
+.control-center {
+  background: rgba(68, 71, 90, 0.9);
+  /*border-radius: 5px;*/
+  border: 1px solid #6272A4;
+}
+.control-center-list {
+  background: transparent;
+  opacity: 0.7;
+  border-top: 1px solid #6272A4;
+}
+
+.floating-notifications {
+  background: transparent;
+}

@@ -1,0 +1,45 @@
+# Desktop notifications
+exec swaync -s $HOME/.config/swaync/style.css
+
+# Network Applet
+exec nm-applet --indicator
+
+# GTK3 applications take a long time to start
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
+# SOV
+set $SOVSOCK /tmp/sovpipe
+exec rm -f $SOVSOCK && mkfifo $SOVSOCK && tail -f $SOVSOCK | sov
+
+#sWorkstyle
+exec sworkstyle &> /tmp/sworkstyle.tmp
+
+# SwayR
+exec env RUST_BACKTRACE=1 RUST_LOG=swayr=debug swayrd > /tmp/swayrd.log 2>&1
+
+# Clipboard
+exec wl-paste -t text --watch clipman store 1>> /tmp/clipboard.log 2>&1 &
+exec clipman restore
+
+exec wmname LG3D
+exec wl-clipboard-manager -t
+
+# WOB
+set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
+exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+
+# AutoStart
+exec dex -a -s /etc/xdg/autostart/:~/.config/autostart/
+exec ~/.config/autostart/lx.sh
+
+# NordTray
+exec /usr/lib/nordtray/nordtray
+
+# Swaylock
+exec ~/.config/sway/scripts/lockman.sh
+
+# Syncthing
+exec /usr/bin/syncthingtray
+

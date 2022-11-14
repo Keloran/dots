@@ -1,0 +1,57 @@
+# Apply gtk theming
+exec_always ~/.config/sway/scripts/import-gsettings
+
+# Set inner/outer gaps
+smart_gaps off
+gaps inner 6
+gaps outer 2
+gaps top 3
+
+titlebar_padding 16 6
+title_align center
+
+# Hide titlebar on windows:
+default_border pixel 1
+#default_floating_border pixel 1
+
+# Default Font
+#font pango:Noto Sans Regular 10
+font pango:JetBrainsMono Nerd Font 10
+
+# Cursor
+seat seat0 xcursor_theme Dracula-cursors
+
+# Thin borders:
+smart_borders off
+
+# Set wallpaper:
+exec_always ~/.config/sway/scripts/swaybg.sh
+
+#exec ~/bin/dash.sh
+
+# class                 border  bground text    indicator child_border
+client.focused          #6272A4 #6272A4 #F8F8F2 #6272A4   #6272A4
+client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
+client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
+client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
+client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
+client.background       #F8F8F2
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+  id topBar
+  status_command env RUST_BACKTRACE=1 RUST_LOG=swayr-debug swayrbar 2> /tmp/swayrbar.log
+  position top
+  font pango:Iosevka 11
+  height 40
+  colors {
+    statusline #6272A4
+    background #F8F8F2
+  }
+
+  swaybar_command waybar
+  #swaybar_command nwg-panel
+}

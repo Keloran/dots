@@ -1,0 +1,56 @@
+### Input configuration
+#
+# Example configuration:
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Put your touchpad's ID to replace "Touchpad-ID" (keep the quotation marks)
+
+input type:touchpad {
+  dwt enabled
+  tap enabled
+  natural_scroll enabled
+}
+
+input 1133:16511:Logitech_G502 {
+	natural_scroll enabled
+	pointer_accel -0.45
+	accel_profile "flat"
+}
+
+input 1133:16531:Logitech_PRO_X {
+	natural_scroll enabled
+	pointer_accel -0.45
+	accel_profile "flat"
+}
+
+seat * hide_cursor 15000
+focus_follows_mouse yes
+mouse_warping none
+
+# Read `man 5 sway-input` for more information about this section.
+#
+input 12972:6:FRMW0001:00_32AC:0006_Consumer_Control {
+  xkb_layout "us"
+  xkb_options caps:swapescape
+}
+input 12972:6:FRMW0001:00_32AC:0006_Wireless_Radio_Control {
+  xkb_layout "us"
+  xkb_options caps:swapescape
+}
+input 1:1:AT_Translated_Set_2_keyboard {
+  xkb_layout "us"
+  xkb_options caps:swapescape
+}
+ 
+
+exec_always {
+    'swaymsg input type:keyboard xkb_layout "$(localectl status | grep "X11 Layout" | sed -e "s/^.*X11 Layout://")"'
+    'swaymsg input type:keyboard xkb_variant "$(localectl status | grep "X11 Variant" | sed -e "s/^.*X11 Variant://")"'
+}
+
+# Gestures
+#bindgesture swipe:3:left workspace prev
+#bindgesture swipe:3:right workspace next
+#bindgesture swipe:4:up move scratchpad
+#bindgesture swipe:4:down [floating] scratchpad show
+#bindgesture pinch:inward floating enable
+#bindgesture pinch:outward floating disable

@@ -1,0 +1,326 @@
+[
+    {
+        "layer": "top",
+        "position": "top",
+        "margin-top": 6,
+        "margin-bottom": 2,
+        "margin-left": 6,
+        "margin-right": 6,
+
+        "modules-left": [
+            "custom/shutdown",
+            "custom/launcher",
+            "custom/files",
+            "custom/music",
+            "custom/cider_prev",
+            "custom/cider_playpause",
+            "custom/cider_next",
+            "sway/mode",
+            "sway/workspaces"
+        ],
+
+        "modules-center": [
+            "sway/window"
+        ],
+
+        "modules-right": [
+            "memory",
+            "cpu",
+            "pulseaudio",
+            "upower",
+            "tray",
+            "custom/scratchpad-indicator",
+            "custom/notification",
+            "clock"
+        ],
+
+        "custom/scratchpad-indicator": {
+        	"interval": 3,
+    	    "exec": "swaymsg -t get_tree | jq 'recurse(.nodes[]) | first(select(.name==\"__i3_scratch\")) | .floating_nodes | length | select(. >= 1)'",
+    	    "format": "{} ",
+    	    "on-click": "swaymsg 'scratchpad show'",
+    	    "on-click-right": "swaymsg 'move scratchpad'"
+        },
+
+        "custom/notification": {
+          "tooltip": false,
+          "format": "{icon}",
+          "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": ""
+          },
+          "return-type": "json",
+          "exec": "swaync-client -swb",
+          "on-click": "swaync-client -t -sw",
+          "on-click-right": "swaync-client -d -sw",
+          "escape": true
+        },
+
+        "custom/cider_prev": {
+            "on-click": "cider-polybar -a previous",
+            "on-scroll-up": "cider-polybar -a volume -v 0.01",
+            "on-scroll-down": "cider-polybar -a volume -v -0.01",
+            "format": "玲"
+        },
+        "custom/cider_next": {
+            "on-click": "cider-polybar -a next",
+            "on-scroll-up": "cider-polybar -a volume -v 0.01",
+            "on-scroll-down": "cider-polybar -a volume -v 0.01",
+            "format": "怜"
+        },
+        "custom/cider_playpause": {
+            "on-click": "cider-polybar -a playpause",
+            "on-scroll-up": "cider-polybar -a volume -v 0.01",
+            "on-scroll-down": "cider-polybar -a volume -v -0.01",
+            "format": "懶"
+        },
+
+        "idle_inhibitor": {
+            "format": "{icon} ",
+            "format-icons":{
+                "activated": "",
+                "deactivated": ""
+            }
+        },
+
+        "backlight": {
+            "format": "{brightness}% "
+        },
+
+        "upower": {
+            "on-click": "exec ~/.config/waybar/scripts/power.sh"
+        },
+        
+        "custom/shutdown": {
+            "on-click": "exec ~/.config/waybar/scripts/power.sh",
+            "format": "⏻",
+            "tooltip": false
+        },
+
+        "battery": {
+            "states": {
+                "warning": 30,
+                "critical": 15
+            },
+            "format": "{capacity}% {icon}",
+            "format-charging": "{capacity}% ",
+            "format-plugged": "{capacity}% ",
+            "format-icons": ["", "", "", "", ""],
+            "on-click": "exec ~/.config/waybar/scripts/power.sh",
+            "tooltip": true
+        },
+
+        "custom/logi-battery": {
+            "exec": "~/.config/waybar/scripts/logi_battery.sh",
+            "format": "{}% ",
+            "tooltip": false,
+            "return-type": "integer",
+            "interval": 60
+        },
+
+        "custom/PBPbattery": {
+            "exec": "~/.config/waybar/scripts/PBPbattery.sh",
+            "format": "{}"
+        },
+
+        "clock": {
+            "interval": 10,
+            "format-alt": "{:%e %b %Y}  ",
+            "format": "{:%H:%M}",
+            "tooltip-format": "{:%e %B %Y}",
+            "on-click-right": "thunderbird"
+        },
+
+        "cpu": {
+            "interval": 5,
+            "format": "{usage}% ({load}) {icon} ",
+            "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+            "states": {
+                "warning": 70,
+                "critical": 90
+            },
+            "on-click": "foot --app-id=htop --title=htop htop"
+        },
+
+        "custom/keyboard-layout": {
+            "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4",
+            "interval": 30,
+            "format": "  {}",
+            "signal": 1,
+            "tooltip": false,
+            "on-click": "~/.config/waybar/scripts/keyhint.sh"
+        },
+
+        "memory": {
+            "interval": 5,
+            "format": "{}% {icon} ",
+            "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+            "on-click": "foot --app-id=glances --title=glances glances",
+            "states": {
+                "warning": 70,
+                "critical": 90
+            }
+        },
+
+        "network": {
+            "interval": 5,
+            "format-wifi": "{essid} ({signalStrength}%)  ",
+            "format-ethernet": "{ifname}: {ipaddr}/{cidr}  ",
+            "format-disconnected": "⚠  Disconnected",
+            "tooltip-format": "{ifname}: {ipaddr}",
+            "on-click": "foot--app-id=nmtui --title=nmtui nmtui"
+        },
+        "network#vpn": {
+            "interface": "tun0",
+            "format": "{essid} ({signalStrength}%)  ",
+            "format-disconnected": "⚠  Disconnected",
+            "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
+        },
+
+        "sway/mode": {
+            "format": "ﭕ {}",
+            "tooltip": false
+        },
+
+        "sway/window": {
+            "format": "{}",
+            "max-length": 120,
+            "rewrite": {
+           		"(.*) - Mozilla Firefox": "🌎 $1",
+           		"(.*) - vi": " $1",
+          	 	"(.*) - zsh": " [$1]"
+        	}
+        },
+
+        "sway/workspaces": {
+            "disable-scroll": true,
+            "disable-markup" : false,
+            "all-outputs": false,
+            "format": "  {icon}  ",
+            "format-icons": {
+                "urgent": "",
+                "active": ""
+            }
+        },
+
+        "pulseaudio": {
+            "scroll-step": 1,
+            "format": "{volume}% {icon}",
+            "format-bluetooth": "{volume}% {icon}  {format_source}",
+            "format-bluetooth-muted": " {icon}  {format_source}",
+            "format-muted": "婢 {format_source}",
+            "format-source": "{volume}% ",
+            "format-source-muted": "",
+            "format-icons": {
+                "headphone": "",
+                "hands-free": "וֹ",
+                "headset": "  ",
+                "phone": "",
+                "portable": "",
+                "car": "",
+                "default": [""]
+            },
+            "on-click": "pavucontrol",
+            "on-scroll-up": "pamixer -ui 2",
+            "on-scroll-down": "pamixer -ud 2"
+        },
+
+        "custom/weather": {
+            "exec": "~/.config/waybar/scripts/weather.sh",
+            "format": "{text} {icon}",
+            "return-type": "json",
+            "interval": 600,
+            "tooltip-format": "{tooltip}"
+        },
+
+        "tray": {
+            "icon-size": 18,
+            "spacing": 10,
+            "show-passive-items": true
+         },
+
+        "backlight#icon": {
+            "format": "{icon}",
+            "format-icons": [""],
+            "on-scroll-down": "brightnessctl -c backlight set 1%-",
+            "on-scroll-up": "brightnessctl -c backlight set +1%"
+        },
+
+        "backlight#value" :{
+             "format": "{percent}%",
+             "on-scroll-down": "brightnessctl -c backlight set 1%-",
+             "on-scroll-up": "brightnessctl -c backlight set +1%"
+        },
+
+        "custom/firefox": {
+            "format": " ",
+            "on-click": "exec firefox",
+            "tooltip": false
+        },
+
+        "custom/terminal": {
+            "format": " ",
+            "on-click": "exec alacritty",
+            "tooltip": false
+        },
+
+        "custom/files": {
+            "format": " ",
+            "on-click": "exec thunar",
+            "tooltip": false
+        },
+
+        "custom/launcher": {
+            "format":" ",
+            "on-click": "nwg-drawer",
+            "tooltip": false
+        },
+
+        "custom/power": {
+            "format":"⏻",
+            "on-click": "exec nwg-bar -t power.json -s power.css",
+            "tooltip": false
+        },
+        "custom/music": {
+            "format": "露",
+            "tooltip": false,
+            "on-click": "exec nwg-bar -t player.json -s player.css",
+            "on-click-right": "com.github.geigi.cozy"
+        }
+    },
+    {
+        "layer": "bottom",
+        "position": "bottom",
+        "height": 42,
+        "output": "eDP-1",
+        "width": 10,
+        "margin-top": 6,
+        "margin-bottom": 0,
+        "margin-left": 6,
+        "margin-right": 6,
+        "modules-left": [],
+        "modules-center": [
+            "wlr/taskbar"
+        ],
+        "modules-right": [],
+
+        "wlr/taskbar": {
+            "active-first": true,
+            "all-outputs": true,
+            "format": "{icon}",
+            "icon-size": 24,
+            "icon-theme": "Dracula",
+            "tooltip-format": "{title}",
+            "on-click": "activate",
+            "on-click-middle": "close",
+            "ignore-list": [
+               "Alacritty"
+            ],
+            "app_ids-mapping": {
+              "firefoxdeveloperedition": "firefox-developer-edition"
+            }
+        }
+    }
+]

@@ -1,0 +1,79 @@
+fallback = ''
+unique = true
+
+[matching]
+## partials
+'/GitHub/' = ''
+'/GitLab/' = ''
+'/YouTube/' = ''
+'/NVIM ?\w*/' = ''
+'/npm/' = ''
+'/node/' = ''
+'/yarn/' = ''
+'/Stack Overflow/' = ''
+
+## browsers
+'google-chrome' = ''
+'chromium' = ''
+'firefox' = ''
+'firefoxdeveloperedition' = ''
+'brave-browser' = ''
+'qutebrowser' = '爵'
+
+## default applications
+'foot' = ''
+'/foot/' = ''
+'pcmanfm' = ''
+'pamac-manager' = ''
+'/Bluetooth/' = ''
+
+## email
+'Thunderbird' = ''
+'thunderbird' = ''
+'evolution' = ''
+'Mailspring' = ''
+
+## ide
+'/IntelliJ/' = ''
+'subl' = ''
+'jetbrains-goland' = 'ﳑ'
+'jetbrains-intellij' = ''
+'jetbrains-webstorm' = '﵂'
+'jetbrains-datagrip' = ''
+'jetbrains-clion' = 'ﭱ'
+'vim' = ''
+'vi' = ''
+
+# messenger
+'whatsapp-for-linux' = ''
+'Slack' = ''
+'/Telegram/' = ''
+'/Microsoft Teams/' = ''
+'discord' = ''
+
+## auth
+'polkit-gnome-authentication-agent-1' = ''
+'lxpolkit' =  ''
+
+## additional applications
+'balena-etcher' = ''
+'Steam' = ''
+'vlc' = '嗢'
+'org.qbittorrent.qBittorrent' = ''
+'Insomnia' = ''
+'Bitwarden' = ''
+'Spotify' = ''
+'Alacritty' = ''
+'kitty' = ''
+'font-manager' = ''
+'lutris' = ''
+'/Wine/' = ''
+'1Password' = 'ﳳ'
+'obsidian' = ''
+'OpenAudible' = ''
+'sayonara' = ''
+'com.github.geigi.cozy' = '龎'
+'/MongoDB Compass/' = ''
+'/GNU Image Manipulation Program/' = ''
+'Cider' = ''
+'thunar' = ''
